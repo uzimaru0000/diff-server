@@ -13,7 +13,16 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "styled-components": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^4.0.2",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "@types/socket.io-client": "^1.4.32",
+    "@types/styled-components": "^4.4.2",
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.3.7",
@@ -26,7 +35,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:server": "parcel watch -t node ./src/server/main.ts",
-    "start:server": "parcel serve -t node ./src/server/main.ts"
+    "start:server": "parcel serve -t node ./src/server/main.ts",
+    "start": "parcel serve ./src/front/index.html"
   },
   "keywords": [],
   "author": "",
