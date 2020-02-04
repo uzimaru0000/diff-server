@@ -24,24 +24,18 @@ export const receiveDiff = async (
   stop: () => boolean
 ) => {
   while (!stop()) {
-    const [json] = await ioService.receiveMsg();
+    const [data] = await ioService.receiveMsg();
 
-    try {
-      const data = JSON.parse(json);
+    if (data === null) continue;
+    console.log(data);
 
-      if (!authService.validate(data.token)) {
-        ioService.sendMsg({ message: 'invalid token' });
-        throw new Error('invalid token');
-      }
-
-      const { sessionId } = authService.decode(data.token) as Session;
-      mem.update(sessionId, data.diff);
-    } catch (e) {
-      if (e.message === 'invalid token') {
-        throw e;
-      }
-      ioService.sendMsg({ message: 'invalid JSON' });
+    if (!authService.validate(data.token)) {
+      ioService.sendMsg({ message: 'invalid token' });
+      throw new Error('invalid token');
     }
+
+    const { sessionId } = authService.decode(data.token) as Session;
+    mem.update(sessionId, data.diff);
   }
 };
 

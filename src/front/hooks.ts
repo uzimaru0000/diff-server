@@ -29,7 +29,6 @@ export const useDiff = (value: string) => {
   React.useEffect(() => {
     setDiff(createPatch('code', currentText, value));
     setCurrentText(value);
-    console.log(value);
   }, [value]);
 
   return diff;
@@ -45,7 +44,6 @@ export const useSocket = (url: string, event: string) => {
       ioRef.current.disconnect();
     }
     ioRef.current = SocketIOClient(url);
-    console.log(ioRef);
   }, [url]);
 
   React.useEffect(() => {

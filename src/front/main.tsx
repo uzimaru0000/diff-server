@@ -39,14 +39,33 @@ const Preview = styled.pre`
   word-wrap: break-word;
 `;
 
-const App = () => {
-  const [text, setText] = React.useState('');
-  const value = useThrottle(text, 5000);
-  const diff = useDiff(value);
+const useDiffServer = () => {
   const [msg, setArgs] = useSocket('http://localhost:3000', 'diff');
+  const [token, setToken] = React.useState<string>('');
 
   React.useEffect(() => {
-    setArgs(diff);
+    if (msg !== null && msg.token) {
+      setToken(msg.token);
+    }
+  }, [msg]);
+
+  return (value: string) => {
+    if (token === '') return;
+    setArgs({
+      token,
+      diff: value,
+    });
+  };
+};
+
+const App = () => {
+  const [text, setText] = React.useState('');
+  const value = useThrottle(text, 1000);
+  const diff = useDiff(value);
+  const sendDiff = useDiffServer();
+
+  React.useEffect(() => {
+    sendDiff(diff);
   }, [diff]);
 
   return (
